@@ -15,24 +15,24 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author wuming
+ * @author fengzao
  * @date 2019/7/2 17:20
  */
 
 @Slf4j
 @Aspect
-public class DomainPostProcessor implements ApplicationContextAware {
+public class RepositoryBeanPostProcessor implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
     @Around("@within(org.springframework.stereotype.Repository)")
     public Object inject(ProceedingJoinPoint point) throws Throwable {
-        Object domain = point.proceed();
-        if (domain == null) {
-            return domain;
+        Object model = point.proceed();
+        if (model == null) {
+            return model;
         }
-        new PropertiesInjector().inject(domain);
-        return domain;
+        new PropertiesInjector().inject(model);
+        return model;
     }
 
     @Override
@@ -44,33 +44,33 @@ public class DomainPostProcessor implements ApplicationContextAware {
         private final Set<Class> JAVA_WRAPPER_CLASSES = Sets.newHashSet(String.class, Short.class, Integer.class, Long.class, Byte.class, Character.class, Double.class, Float.class);
         private Set<Object> processed = new HashSet<>();
 
-        public void inject(Object domain) {
-            if (domain == null || processed.contains(domain)) {
+        public void inject(Object model) {
+            if (model == null || processed.contains(model)) {
                 return;
             }
-            processed.add(domain);
-            Class clazz = domain.getClass();
+            processed.add(model);
+            Class clazz = model.getClass();
             if (clazz.isPrimitive() || JAVA_WRAPPER_CLASSES.contains(clazz)) {
                 return;
             }
-            if (domain instanceof Collection) {
-                for (Object obj : (Collection) domain) {
+            if (model instanceof Collection) {
+                for (Object obj : (Collection) model) {
                     inject(obj);
                 }
             }
-            if (domain instanceof Map) {
-                for (Object key : ((Map) domain).keySet()) {
+            if (model instanceof Map) {
+                for (Object key : ((Map) model).keySet()) {
                     inject(key);
                 }
-                for (Object value : ((Map) domain).values()) {
+                for (Object value : ((Map) model).values()) {
                     inject(value);
                 }
             }
-            if (domain.getClass().isAnnotationPresent(Domain.class)) {
-                applicationContext.getAutowireCapableBeanFactory().autowireBean(domain);
-                ReflectionUtils.doWithFields(domain.getClass(), (field) -> {
+            if (model.getClass().isAnnotationPresent(Model.class)) {
+                applicationContext.getAutowireCapableBeanFactory().autowireBean(model);
+                ReflectionUtils.doWithFields(model.getClass(), (field) -> {
                     field.setAccessible(true);
-                    inject(field.get(domain));
+                    inject(field.get(model));
                 });
             }
         }

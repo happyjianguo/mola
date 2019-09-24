@@ -1,7 +1,7 @@
 package org.cokebook.mola.example.domain;
 
 import lombok.Data;
-import org.cokebook.mola.Domain;
+import org.cokebook.mola.Model;
 import org.cokebook.mola.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * @author wuming
  * @date 2019/7/7 16:41
  */
-@Domain
+@Model
 @Data
 public class User {
 

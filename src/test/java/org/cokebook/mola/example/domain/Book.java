@@ -1,7 +1,7 @@
 package org.cokebook.mola.example.domain;
 
 import lombok.Data;
-import org.cokebook.mola.Domain;
+import org.cokebook.mola.Model;
 import org.cokebook.mola.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2019/7/7 16:45
  */
 @Data
-@Domain
+@Model
 public class Book {
 
     @Autowired

@@ -1,6 +1,5 @@
 package org.cokebook.mola.example.repository;
 
-import org.cokebook.mola.Factory;
 import org.cokebook.mola.example.domain.Book;
 import org.cokebook.mola.example.domain.User;
 import org.springframework.stereotype.Repository;
@@ -14,10 +13,6 @@ import java.util.Map;
  */
 @Repository
 public class UserRepository {
-
-    public User $new(Factory<User> factory) {
-        return factory.build();
-    }
 
     public void updateUserName(User user) {
         System.out.println("========== update user name ========" + user);

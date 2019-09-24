@@ -1,18 +1,22 @@
 package org.cokebook.mola.boot;
 
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
 /**
- * @author wuming
+ * 开启自动填充模型
+ *
+ * @author fengzao
  * @date 2019/7/7 16:14
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(DomainPostProcessorRegister.class)
-public @interface EnableDDD {
+@EnableAspectJAutoProxy
+@Import(RepositoryInterceptorRegister.class)
+public @interface EnableAutoPopulateModel {
 
     String value() default "true";
 

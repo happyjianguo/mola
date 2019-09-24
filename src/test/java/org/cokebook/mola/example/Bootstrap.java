@@ -1,6 +1,6 @@
 package org.cokebook.mola.example;
 
-import org.cokebook.mola.boot.EnableDDD;
+import org.cokebook.mola.boot.EnableAutoPopulateModel;
 import org.cokebook.mola.example.domain.User;
 import org.cokebook.mola.example.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
  * @date 2019/7/7 16:20
  */
 
-@EnableDDD
+@EnableAutoPopulateModel
 @SpringBootApplication
 public class Bootstrap {
 
