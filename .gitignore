@@ -3,3 +3,6 @@ Mola.iml
 target
 logs
 .idea
+*.iml
+*/target
+*/*.iml
