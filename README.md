@@ -1,16 +1,13 @@
 ## Mola
 
-  Mola (翻车鱼) :  该项目目的在于为基于 Spring 企业应用项目实现 DDD 的构造块(Repository, Factory)提供快捷支持. 简化项目的开发工作, 避免理论的生搬硬套. 
-
-### Example 示例说明
-
-  为了实现 DDD(这里强调充血模型下的领域对象)  按照理论最少需要实现三个基本构造块:  Model  Repository  Factory.  在这三个构造块各自职责:
+  Mola (翻车鱼) :  该项目目的在于为基于 Spring 企业应用项目实现 MDD 的构造块(Repository, Factory)提供快捷支持,简化项目的开发工作. 
   
-  - Model :  承载领域逻辑 
-  - Factory : 负责构建新的领域对象
-  - Repository : 负责载入持久化之后的数据
-  
-  在常规项目中其实现大致如下,
+  在常规的实现方案中对某一单一的Model来说, 你大体需要定义 Xyz (Model 类), XyzRepository , XyzFactory, XyzService(可选) 四个类.
+  这个四个类中: XyzRepository , XyzFactory, XyzService 这三个类通常会被作为 Spring  Bean 使用. 其作用分别如下
+  - XyzRepository  : 负责从持久化存储器中构建 Xyz 对象
+  - XyzFactory     : 负责创建新的为持久化的 Xyz 对象
+  - XyzService     :  可选仅在某些业务逻辑场景下使用.
+
   
 
 ```java
@@ -50,36 +47,5 @@
 
 #### 新的开发模式
 
-该项目的功能在于提供一种更简单的方式: 实现相同的功能.  在该方案下将 Factory 由显式调整为隐式 : 即将其作为一个函数接口使用, 将其传递给 Repository.
 
-> 关于在创建对象时特殊路径  create -> Repository -> Factory 的方案 在 Eric Evans 的领域驱动一书中有详细模式
-
-
- 
-```java
- 
-   public class XyzController2 {
-        private XyzRepository xyzRepository;
-       
-        public Object doSomething(){
-              Xyz xyz = xyzRepository.create( () -> new Xyz());
-              return xyz.doSomething();
-        }
-       
-   }
-   /* 作为限制 你需要做如下的操作 
-      - 声明 Xyz 是一个领域对象  
-    */
-   
-   @org.cokebook.mola.Domain
-   public class Xyz{ /*...*/}
-   
-   /* 在SpringBOOT 启动类中允许DDD */
-   @org.cokebook.mola.boot.EnableDDD
-   @SpringBootApplication
-   public class Bootstrap { /* ... */}
-   
-```
-
-
-### 关于样例的更多测试 见 测试代码中的 org.cokebook.mola.example 目录
+- [mole-example](./mola-core)
