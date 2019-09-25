@@ -48,4 +48,4 @@
 #### 新的开发模式
 
 
-- [mole-example](./mola-core)
+- [mole-example](./mola-example)
