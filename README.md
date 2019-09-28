@@ -5,7 +5,7 @@
   在常规的实现方案中对某一单一的Model来说, 你大体需要定义 Xyz (Model 类), XyzRepository , XyzFactory, XyzService(可选) 四个类.
   这个四个类中: XyzRepository , XyzFactory, XyzService 这三个类通常会被作为 Spring  Bean 使用. 其作用分别如下
   - XyzRepository  : 负责从持久化存储器中构建 Xyz 对象
-  - XyzFactory     : 负责创建新的为持久化的 Xyz 对象
+  - XyzFactory     : 负责创建新的未持久化的 Xyz 对象
   - XyzService     :  可选仅在某些业务逻辑场景下使用.
 
   
