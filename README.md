@@ -48,4 +48,4 @@
 #### 新的开发模式
 
 
-- [mole-example](./mola-example)
+- [mole-example](./mola-example/src/main/java/org/cokebook/mola/ums/Demo.java)
