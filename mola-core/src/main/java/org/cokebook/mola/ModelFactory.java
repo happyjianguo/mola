@@ -1,30 +1,21 @@
 package org.cokebook.mola;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.annotation.AnnotationUtils;
-
 /**
- * @author fengzao
- * @date 2019/9/24 17:38
+ * 模型对象工厂
+ *
+ * @date 2019/9/29 14:02
  */
-public class ModelFactory implements ApplicationContextAware {
+public interface ModelFactory {
 
-    private ApplicationContext applicationContext;
 
-    public <T> T create(ModelBuilder<T> builder) {
-        T model = builder.build();
-        if (model != null && AnnotationUtils.findAnnotation(model.getClass(), Model.class) != null) {
-            applicationContext.getAutowireCapableBeanFactory().autowireBean(model);
-        }
-        return model;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
+    /**
+     * 创建新模型对象
+     *
+     * @param builder
+     * @param <T>
+     * @return
+     */
+    public <T> T create(ModelBuilder<T> builder);
 
     /**
      * 模型对象构建器

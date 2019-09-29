@@ -1,10 +1,11 @@
-package org.cokebook.mola;
+package org.cokebook.mola.spring;
 
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.cokebook.mola.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ReflectionUtils;

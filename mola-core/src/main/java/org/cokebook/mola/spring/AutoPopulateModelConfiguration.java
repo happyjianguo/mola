@@ -1,4 +1,4 @@
-package org.cokebook.mola.boot;
+package org.cokebook.mola.spring;
 
 import org.springframework.context.annotation.Configuration;
 

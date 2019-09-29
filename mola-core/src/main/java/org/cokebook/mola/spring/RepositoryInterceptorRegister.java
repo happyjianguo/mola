@@ -1,6 +1,5 @@
-package org.cokebook.mola.boot;
+package org.cokebook.mola.spring;
 
-import org.cokebook.mola.RepositoryBeanPostProcessor;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 

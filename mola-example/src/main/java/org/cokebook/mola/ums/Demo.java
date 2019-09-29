@@ -15,10 +15,10 @@ import org.springframework.context.ApplicationContext;
  * @date 2019/9/25 17:47
  */
 @SpringBootApplication
-public class Bootstrap {
+public class Demo {
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(Bootstrap.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(Demo.class, args);
         UserRepository userRepository = applicationContext.getBean(UserRepository.class);
         showUseRepository(userRepository);
         showUseModelFactory(applicationContext);
