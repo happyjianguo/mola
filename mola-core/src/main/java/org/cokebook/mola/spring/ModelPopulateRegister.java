@@ -6,22 +6,21 @@ import org.springframework.core.type.AnnotationMetadata;
 import java.util.Map;
 
 /**
- * Model Repository Interceptor Register
+ * ModelPopulateRegister
  * Note: 该类的作用是提供按条件决定引入 DDD 增强的功能
  *
- * @author fengzao
  * @date 2019/7/7 16:16
  */
-public class RepositoryInterceptorRegister implements ImportSelector {
-    public static final String TRUE = "TRUE";
+public class ModelPopulateRegister implements ImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        Map<String, Object> annotation = importingClassMetadata.getAnnotationAttributes(EnableAutoPopulateModel.class.getName(), true);
-        boolean enable = TRUE.equalsIgnoreCase((String) annotation.get("value"));
+        Map<String, Object> annotation = importingClassMetadata.getAnnotationAttributes(EnableAutoModelPopulate.class.getName(), true);
+        boolean enable = Boolean.TRUE.equals(annotation.get("value"));
         if (enable) {
             return new String[]{
-                    RepositoryBeanPostProcessor.class.getName()
+                    RepositoryBeanPostProcessor.class.getName(),
+                    SimpleModelFactory.class.getName()
             };
         }
         return new String[0];

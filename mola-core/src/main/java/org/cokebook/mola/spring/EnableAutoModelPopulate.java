@@ -6,18 +6,17 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * 开启自动填充模型
+ * 自动填充模型 spring import ext annotation
  *
- * @author fengzao
  * @date 2019/7/7 16:14
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @EnableAspectJAutoProxy
-@Import(RepositoryInterceptorRegister.class)
-public @interface EnableAutoPopulateModel {
+@Import(ModelPopulateRegister.class)
+public @interface EnableAutoModelPopulate {
 
-    String value() default "true";
+    boolean value() default true;
 
 }

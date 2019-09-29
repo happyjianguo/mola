@@ -1,6 +1,7 @@
 package org.cokebook.mola.spring;
 
 import org.cokebook.mola.Model;
+import org.cokebook.mola.ModelBuilder;
 import org.cokebook.mola.ModelFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -8,7 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
 
 /**
- * @author fengzao
+ *
  * @date 2019/9/24 17:38
  */
 public class SimpleModelFactory implements ModelFactory, ApplicationContextAware {

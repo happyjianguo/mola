@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
  * 该示例用于简单的演示在 Spring boot 框架下
  * ModelFactory & Repository 的使用
  *
- * @author fengzao
+ *
  * @date 2019/9/25 17:47
  */
 @SpringBootApplication

@@ -5,7 +5,7 @@ import org.cokebook.mola.ums.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author fengzao
+ *
  * @date 2019/9/25 17:14
  */
 @Model
