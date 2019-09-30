@@ -60,6 +60,13 @@ public class Demo {
         System.out.println();
     }
 
+    /**
+     * 演示/测试仓库返回数组场景
+     *
+     * @param userRepository
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
     private static void showUseRepositoryWhitArrayResult(UserRepository userRepository) throws NoSuchFieldException, IllegalAccessException {
         User[] users = userRepository.query(Arrays.asList(1L, 2L));
         if (users.length > 0) {
