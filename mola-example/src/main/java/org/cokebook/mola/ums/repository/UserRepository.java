@@ -25,6 +25,10 @@ public class UserRepository {
         return new User(id, MockDB.ID_NAMES.get(id));
     }
 
+    public Tuple<Long, User> queryTuple(long id) {
+        return new Tuple<>(id, query(id));
+    }
+
     public User[] query(List<Long> ids) {
         if (ids == null || ids.isEmpty()) {
             return new User[0];
@@ -46,6 +50,17 @@ public class UserRepository {
 
     public void insert(User user) {
         MockDB.ID_NAMES.put(user.getId(), user.getName());
+    }
+
+
+    public static class Tuple<T1, T2> {
+        public final T1 first;
+        public final T2 second;
+
+        public Tuple(T1 first, T2 second) {
+            this.first = first;
+            this.second = second;
+        }
     }
 
 }

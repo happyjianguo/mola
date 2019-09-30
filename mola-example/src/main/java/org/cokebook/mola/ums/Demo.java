@@ -1,11 +1,13 @@
 package org.cokebook.mola.ums;
 
 import org.cokebook.mola.ModelFactory;
+import org.cokebook.mola.injector.Injector;
 import org.cokebook.mola.ums.model.User;
 import org.cokebook.mola.ums.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Field;
@@ -26,6 +28,7 @@ public class Demo {
         showUseRepository(userRepository);
         showUseModelFactory(applicationContext);
         showUseRepositoryWhitArrayResult(userRepository);
+        showUseRepositoryWithCustomerType(userRepository);
     }
 
     /**
@@ -35,8 +38,6 @@ public class Demo {
      */
     private static void showUseModelFactory(ApplicationContext applicationContext) {
         ModelFactory modelFactory = applicationContext.getBean(ModelFactory.class);
-
-
         User newUser = modelFactory.<User>create(() -> new User(100L, "test"));
         newUser.save();
 
@@ -70,12 +71,40 @@ public class Demo {
     private static void showUseRepositoryWhitArrayResult(UserRepository userRepository) throws NoSuchFieldException, IllegalAccessException {
         User[] users = userRepository.query(Arrays.asList(1L, 2L));
         if (users.length > 0) {
-            System.out.println(users[0]);
+            System.out.println("user array [0] = " + users[0]);
             users[0].changeName("xxxxx");
             Field field = User.class.getDeclaredField("userRepository");
             field.setAccessible(true);
             Assert.notNull(field.get(users[0]));
         }
-
     }
+
+    @Bean
+    public Injector.Processor tupleProcessor() {
+        return new Injector.Processor() {
+            @Override
+            public void process(Object model, Injector injector) {
+                if (model instanceof UserRepository.Tuple) {
+                    UserRepository.Tuple tuple = (UserRepository.Tuple) model;
+                    injector.inject(tuple.first);
+                    injector.inject(tuple.second);
+                }
+            }
+        };
+    }
+
+    /**
+     * 演示如何应对用户自定义的返回值类型处理
+     *
+     * @param userRepository
+     * @throws Exception
+     */
+    private static void showUseRepositoryWithCustomerType(UserRepository userRepository) throws Exception {
+        UserRepository.Tuple<Long, User> tuple = userRepository.queryTuple(1L);
+        Field field = User.class.getDeclaredField("userRepository");
+        field.setAccessible(true);
+        System.out.println("tuple.second = " + tuple.second);
+        Assert.notNull(field.get(tuple.second));
+    }
+
 }
