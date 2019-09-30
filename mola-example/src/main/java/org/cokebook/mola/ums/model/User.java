@@ -1,14 +1,15 @@
 package org.cokebook.mola.ums.model;
 
+import lombok.ToString;
 import org.cokebook.mola.Model;
 import org.cokebook.mola.ums.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
  * @date 2019/9/25 17:14
  */
 @Model
+@ToString
 public class User {
 
     @Autowired

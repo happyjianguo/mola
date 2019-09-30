@@ -6,23 +6,26 @@ import org.cokebook.mola.ums.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.Assert;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * 该示例用于简单的演示在 Spring boot 框架下
  * ModelFactory & Repository 的使用
- *
  *
  * @date 2019/9/25 17:47
  */
 @SpringBootApplication
 public class Demo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ApplicationContext applicationContext = SpringApplication.run(Demo.class, args);
         UserRepository userRepository = applicationContext.getBean(UserRepository.class);
         showUseRepository(userRepository);
         showUseModelFactory(applicationContext);
-
+        showUseRepositoryWhitArrayResult(userRepository);
     }
 
     /**
@@ -55,5 +58,17 @@ public class Demo {
         System.out.println();
         System.out.println("----------------------------------- user id = 1 and name = " + MockDB.ID_NAMES.get(user.getId()));
         System.out.println();
+    }
+
+    private static void showUseRepositoryWhitArrayResult(UserRepository userRepository) throws NoSuchFieldException, IllegalAccessException {
+        User[] users = userRepository.query(Arrays.asList(1L, 2L));
+        if (users.length > 0) {
+            System.out.println(users[0]);
+            users[0].changeName("xxxxx");
+            Field field = User.class.getDeclaredField("userRepository");
+            field.setAccessible(true);
+            Assert.notNull(field.get(users[0]));
+        }
+
     }
 }
