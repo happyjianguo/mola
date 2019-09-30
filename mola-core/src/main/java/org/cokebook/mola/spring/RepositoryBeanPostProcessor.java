@@ -94,7 +94,7 @@ public class RepositoryBeanPostProcessor implements ApplicationContextAware {
         }
 
         private void handleOnArray(Object model) {
-            if (model.getClass().isArray() || !PRIMITIVE_TYPES.contains(model.getClass())) {
+            if (model.getClass().isArray() && !PRIMITIVE_TYPES.contains(model.getClass())) {
                 Object[] modelArray = (Object[]) model;
                 for (Object item : modelArray) {
                     inject(item);
