@@ -17,7 +17,7 @@ public class SimpleModelFactory implements ModelFactory, ApplicationContextAware
     public <T> T create(ModelBuilder<T> builder) {
         T model = builder.build();
         if (model != null) {
-            new PropertiesInjector(applicationContext.getAutowireCapableBeanFactory()).inject(model);
+            new SpringPropertiesInjector(applicationContext).inject(model);
         }
         return model;
     }

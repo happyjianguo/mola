@@ -23,7 +23,7 @@ public class RepositoryBeanPostProcessor implements ApplicationContextAware {
         if (model == null) {
             return model;
         }
-        new PropertiesInjector(applicationContext.getAutowireCapableBeanFactory()).inject(model);
+        new SpringPropertiesInjector(applicationContext).inject(model);
         return model;
     }
 
