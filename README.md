@@ -1,6 +1,6 @@
 ## Mola
 
-  Mola (翻车鱼) :  该项目目的在于为基于 Spring 企业应用项目实现 MDD 的构造块(Repository, Factory)提供快捷支持,简化项目的开发工作. 
+  Mola (翻车鱼) :  该项目旨在为基于 Spring 企业应用项目实现 MDD 的构造块(Repository, Factory)提供快捷支持,简化项目的开发工作. 
   
   在常规的实现方案中对某一单一的Model来说, 你大体需要定义 Xyz (Model 类), XyzRepository , XyzFactory, XyzService(可选) 四个类.
   这个四个类中: XyzRepository , XyzFactory, XyzService 这三个类通常会被作为 Spring  Bean 使用. 其作用分别如下
