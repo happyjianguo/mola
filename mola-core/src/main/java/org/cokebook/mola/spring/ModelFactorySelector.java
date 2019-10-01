@@ -6,12 +6,12 @@ import org.springframework.core.type.AnnotationMetadata;
 import java.util.Map;
 
 /**
- * ModelPopulateRegister
+ * ModelFactorySelector
  * Note: 该类的作用是提供按条件决定引入 DDD 增强的功能
  *
  * @date 2019/7/7 16:16
  */
-public class ModelPopulateRegister implements ImportSelector {
+public class ModelFactorySelector implements ImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
@@ -19,7 +19,6 @@ public class ModelPopulateRegister implements ImportSelector {
         boolean enable = Boolean.TRUE.equals(annotation.get("value"));
         if (enable) {
             return new String[]{
-                    RepositoryBeanPostProcessor.class.getName(),
                     SimpleModelFactory.class.getName()
             };
         }

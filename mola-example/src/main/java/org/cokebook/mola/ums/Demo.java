@@ -2,6 +2,8 @@ package org.cokebook.mola.ums;
 
 import org.cokebook.mola.ModelFactory;
 import org.cokebook.mola.injector.Injector;
+import org.cokebook.mola.spring.EnableAutoModelPopulate;
+import org.cokebook.mola.ums.model.Teacher;
 import org.cokebook.mola.ums.model.User;
 import org.cokebook.mola.ums.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +21,7 @@ import java.util.Arrays;
  *
  * @date 2019/9/25 17:47
  */
+@EnableAutoModelPopulate(annotations = CustomerModel.class)
 @SpringBootApplication
 public class Demo {
 
@@ -29,6 +32,7 @@ public class Demo {
         showUseModelFactory(applicationContext);
         showUseRepositoryWhitArrayResult(userRepository);
         showUseRepositoryWithCustomerType(userRepository);
+        showCustomerAnnotation(userRepository);
     }
 
     /**
@@ -105,6 +109,11 @@ public class Demo {
         field.setAccessible(true);
         System.out.println("tuple.second = " + tuple.second);
         Assert.notNull(field.get(tuple.second));
+    }
+
+    private static void showCustomerAnnotation(UserRepository userRepository) {
+        Teacher teacher = userRepository.queryTeacher(1L);
+        Assert.notNull(teacher.getUserRepository());
     }
 
 }

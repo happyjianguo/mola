@@ -12,12 +12,13 @@ import org.springframework.context.ApplicationContextAware;
 public class SimpleModelFactory implements ModelFactory, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+    private ModelPopulateInjectorAware modelPopulateInjectorAware;
 
     @Override
     public <T> T create(ModelBuilder<T> builder) {
         T model = builder.build();
         if (model != null) {
-            new SpringPropertiesInjector(applicationContext).inject(model);
+            modelPopulateInjectorAware.getInjector().inject(model);
         }
         return model;
     }
@@ -25,6 +26,7 @@ public class SimpleModelFactory implements ModelFactory, ApplicationContextAware
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+        this.modelPopulateInjectorAware = applicationContext.getBean(ModelPopulateInjectorAware.class);
     }
 
 

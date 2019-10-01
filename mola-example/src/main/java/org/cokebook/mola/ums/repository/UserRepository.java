@@ -1,6 +1,7 @@
 package org.cokebook.mola.ums.repository;
 
 import org.cokebook.mola.ums.MockDB;
+import org.cokebook.mola.ums.model.Teacher;
 import org.cokebook.mola.ums.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,10 @@ public class UserRepository {
         MockDB.ID_NAMES.put(user.getId(), user.getName());
     }
 
+
+    public Teacher queryTeacher(long id) {
+        return new Teacher(id);
+    }
 
     public static class Tuple<T1, T2> {
         public final T1 first;

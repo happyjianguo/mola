@@ -11,7 +11,9 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
@@ -23,8 +25,13 @@ public class SpringPropertiesInjector implements Injector {
     private AutowireCapableBeanFactory beanFactory;
     private List<Processor> innerInjectorProcessor;
     private List<Processor> customerInjectorProcessor;
+    private final Set<Class<? extends Annotation>> annotations = new HashSet<>(4);
 
     public SpringPropertiesInjector(ApplicationContext applicationContext) {
+        this(applicationContext, new HashSet<>(Arrays.asList(Model.class)));
+    }
+
+    public SpringPropertiesInjector(ApplicationContext applicationContext, Set<Class<? extends Annotation>> markAnnotations) {
         this.applicationContext = applicationContext;
         this.beanFactory = applicationContext.getAutowireCapableBeanFactory();
         this.innerInjectorProcessor = Collections.unmodifiableList(
@@ -34,6 +41,10 @@ public class SpringPropertiesInjector implements Injector {
         this.customerInjectorProcessor = applicationContext.getBeansOfType(Injector.Processor.class).values().stream()
                 .filter(processor -> !innerInjectorProcessor.contains(processor))
                 .collect(Collectors.toList());
+        this.annotations.add(Model.class);
+        if (markAnnotations != null) {
+            this.annotations.addAll(markAnnotations);
+        }
     }
 
 
@@ -70,7 +81,7 @@ public class SpringPropertiesInjector implements Injector {
 
         @Override
         public void process(Object model, Injector injector) {
-            if (model.getClass().isAnnotationPresent(Model.class)) {
+            if (clazzMatchAnnotations(model.getClass())) {
                 beanFactory.autowireBean(model);
                 ReflectionUtils.doWithFields(model.getClass(), (field) -> {
                     field.setAccessible(true);
@@ -78,6 +89,21 @@ public class SpringPropertiesInjector implements Injector {
                 });
             }
         }
+    }
+
+    /**
+     * 判断特定 Clazz 是否存在特定标记注解之一 {@link #annotations}
+     *
+     * @param clazz
+     * @return
+     */
+    private boolean clazzMatchAnnotations(Class clazz) {
+        for (Class<? extends Annotation> markAnnotationClazz : annotations) {
+            if (clazz.getAnnotation(markAnnotationClazz) != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

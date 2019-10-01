@@ -1,5 +1,6 @@
 package org.cokebook.mola.spring;
 
+import org.cokebook.mola.Model;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
@@ -14,9 +15,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @EnableAspectJAutoProxy
-@Import(ModelPopulateRegister.class)
+@Import({ModelFactorySelector.class, ModelPopulateBeanDefinitionRegistrar.class})
 public @interface EnableAutoModelPopulate {
 
     boolean value() default true;
+
+    Class<? extends Annotation>[] annotations() default Model.class;
 
 }
