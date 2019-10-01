@@ -111,6 +111,13 @@ public class Demo {
         Assert.notNull(field.get(tuple.second));
     }
 
+    /**
+     * 演示对自定义标识注解的支持
+     *
+     * @param userRepository
+     * @see Teacher
+     * @see CustomerModel
+     */
     private static void showCustomerAnnotation(UserRepository userRepository) {
         Teacher teacher = userRepository.queryTeacher(1L);
         Assert.notNull(teacher.getUserRepository());
